@@ -6,7 +6,7 @@ RegisterNetEvent('police:SetCopCount', function(amount)
 end)
 
 local function GetRandomPackage()
-  packageCoords = Config.PickupLocations[math.random(1, #Config.PickupLocations)]
+  packageCoords = ss.PickupLocations[math.random(1, #ss.PickupLocations)]
   RegisterPickupTarget(packageCoords)
 end
 
@@ -19,20 +19,22 @@ RegisterNetEvent('warehouse:client:target:pickupPackage', function()
     disableCombat = true,
     }, {}, {}, {}, function()
     end)
-  Wait(5000)
-  TriggerServerEvent('warehouse:server:getItem')
+    Wait(5000)
+    TriggerServerEvent('warehouse:server:getItem')
 end)
 
 local function buildInteriorDesign()
-    for _, pickuploc in pairs(Config.PickupLocations) do
-      local model = GetHashKey(Config.WarehouseObjects[math.random(1, #Config.WarehouseObjects)])
-      RequestModel(model)
-      while not HasModelLoaded(model) do
-        Wait(0)
-      end
-      local obj = CreateObject(model, pickuploc.x, pickuploc.y, pickuploc.z, false, true, true)
-      PlaceObjectOnGroundProperly(obj)
-      FreezeEntityPosition(obj, true)
+  for i = 1, #ss.PickupLocations do
+    local coord = ss.PickupLocations[i].coords
+    print(coord)
+        local model = GetHashKey(ss.WarehouseObjects[math.random(1, #ss.WarehouseObjects)])
+        RequestModel(model)
+        while not HasModelLoaded(model) do
+          Wait(0)
+        end
+        local obj = CreateObject(model, coord.x, coord.y, coord.z, false, true, true)
+        PlaceObjectOnGroundProperly(obj)
+        FreezeEntityPosition(obj, true)
     end
 end
 
@@ -42,23 +44,37 @@ RegisterNetEvent('warehouse:EnterDoor', function(data)
   DoScreenFadeOut(500)
   Wait(1000)
   buildInteriorDesign()
-  SetEntityCoords(PlayerPedId(), Config.InsideLocation.x, Config.InsideLocation.y, Config.InsideLocation.z)
+  SetEntityCoords(PlayerPedId(), ss.InsideLocation.x, ss.InsideLocation.y, ss.InsideLocation.z)
+  SetEntityHeading(PlayerPedId(), 266.59)
   DoScreenFadeIn(500)
 end)
 
 RegisterNetEvent('warehouse:ExitDoor', function(data)
   DoScreenFadeOut(500)
   Wait(1000)
-  SetEntityCoords(PlayerPedId(), Config.OutsideLocation.x, Config.OutsideLocation.y, Config.OutsideLocation.z)
+  SetEntityCoords(PlayerPedId(), ss.OutsideLocation.x, ss.OutsideLocation.y, ss.OutsideLocation.z)
+  SetEntityHeading(PlayerPedId(), 267.58)
   DoScreenFadeIn(500)
 end)
 
 
+function hasHackItem()
+  local count = exports.ox_inventory:Search('count', ss.HackItem)
+  if count > 0 then
+      return true
+  else
+      lib.notify({
+          title = 'ERROR!',
+          description = 'Do not have the required item!',
+          type = 'error'
+      }) 
+  end
+end
 
 -- Door thread
 
 RegisterNetEvent('warehouse:EnterLocation', function()
-    if QBCore.Functions.HasItem(Config.HackItem) then
+    if hasHackItem() == true then
         TriggerEvent('animations:client:EmoteCommandStart', {"mechanic4"})
         QBCore.Functions.Progressbar('cnct_elect', 'Rewiring the Security System...', 5000, false, true, {
             disableMovement = true,
@@ -68,7 +84,6 @@ RegisterNetEvent('warehouse:EnterLocation', function()
         }, {}, {}, {}, function()
         end)
         Wait(5000)
-      
         TriggerEvent('animations:client:EmoteCommandStart', {"mechanic4"})
         exports['ps-ui']:Scrambler(function(success)
             if success then
@@ -114,66 +129,7 @@ RegisterNetEvent('warehouse:EnterLocation', function()
                   length = 3,
                 })
                 end
-            end, Config.HackType, Config.HackTime, 0)
-        else
-            QBCore.Functions.Notify('You dont have the right tools', 'error', 3000)
-        end 
+            end, ss.HackType, ss.HackTime, 0)
+          end
 end)
 
-
--- Selling
-
-RegisterNetEvent('warehouse:openMenu', function()
-  local shop = {
-      {
-          header = '💰Pawnshop💰',
-          isMenuHeader = true,
-      },
-      {
-          header = 'Sell Iphone',
-          icon = 'fas fa-hand-holding',
-          params = {
-              isServer = true,
-              event = 'warehouse:server:sellIphone'
-          }
-      },
-      {
-        header = 'Sell Samsung Phone',
-        icon = 'fas fa-hand-holding',
-        params = {
-          isServer = true,
-            event = 'warehouse:server:sellSamsungPhone'
-        }
-      },
-      {
-        header = 'Sell TV',
-        icon = 'fas fa-hand-holding',
-        params = {
-          isServer = true,
-            event = 'warehouse:server:sellTV'
-        }
-      },
-      {
-        header = 'Sell Tablet',
-        icon = 'fas fa-hand-holding',
-        params = {
-          isServer = true,
-            event = 'warehouse:server:sellTablet'
-        }
-      },
-      {
-        header = 'Sell Laptop',
-        icon = 'fas fa-hand-holding',
-        params = {
-          isServer = true,
-            event = 'warehouse:server:sellLaptop'
-        }
-      },
-      {
-          header = 'Walk Away',
-          icon = 'fas fa-xmark',
-
-      }
-  }
-  exports['qb-menu']:openMenu(shop)
-end)
