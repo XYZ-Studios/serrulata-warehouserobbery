@@ -1,10 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local packageCoords = nil
 
-RegisterNetEvent('police:SetCopCount', function(amount)
-  CurrentCops = amount
-end)
-
 local function GetRandomPackage()
   packageCoords = Config.PickupLocations[math.random(1, #Config.PickupLocations)]
   RegisterPickupTarget(packageCoords)
@@ -21,6 +17,13 @@ RegisterNetEvent('warehouse:client:target:pickupPackage', function()
     end)
   Wait(5000)
   TriggerServerEvent('warehouse:server:getItem')
+  Wait(Config.Cooldown * 60000)
+  box1 = false
+  box2 = false
+  box3 = false
+  box4 = false
+  box5 = false
+  box6 = false
 end)
 
 local function buildInteriorDesign()
@@ -126,7 +129,7 @@ end)
 RegisterNetEvent('warehouse:openMenu', function()
   local shop = {
       {
-          header = 'Digital Den',
+          header = '💰Pawnshop💰',
           isMenuHeader = true,
       },
       {
