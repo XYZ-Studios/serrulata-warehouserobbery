@@ -10,7 +10,7 @@ ensure sserrulata-warehouserobbery
 ```
 
 # Config
-![Serrulata](https://i.imgur.com/a/oD9MupD.png)
+![Serrulata](https://i.imgur.com/oD9MupD.png)
 
 
 # Dependencies
