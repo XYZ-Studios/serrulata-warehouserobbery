@@ -13,7 +13,7 @@ Add this in to qb-core/Shared/items.lua
 ```
 	['samsungtv'] 				 	 = {['name'] = 'samsungtv', 			  	  	['label'] = 'Samsung TV', 				['weight'] = 7500, 		['type'] = 'item', 		['image'] = 'tv.png', 					['unique'] = false, 	['useable'] = false, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'Cool Looking TV'},
 ```
-Open the "images" folder and drag that to qb-inventory/html/images
+Open the "images" folder and drag that tv.png to qb-inventory/html/images
 
 # Config
 ![Serrulata](https://i.imgur.com/cTIrh50.png)
