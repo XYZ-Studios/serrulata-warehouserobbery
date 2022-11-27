@@ -126,7 +126,7 @@ end)
 RegisterNetEvent('warehouse:openMenu', function()
   local shop = {
       {
-          header = '💰Pawnshop💰',
+          header = 'Digital Den',
           isMenuHeader = true,
       },
       {
