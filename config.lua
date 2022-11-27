@@ -2,7 +2,7 @@ Config = {}
 
 UseTarget = GetConvar('UseTarget', 'false') == 'true'
 
-Config.HackItem = 'electronickit' -- item used to hack things you are free to change it to whatever you want
+Config.HackItem = 'electronickit' -- item used to rewire the door you are free to change it to whatever you want
 Config.HackType = 'greek' -- can be alphabet, numeric, alphanumeric, greek, braille, runes
 Config.HackTime = 25 --how long to do minigame
 Config.HackingTime = 15 --how long for hacking progressbars
