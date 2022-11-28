@@ -5,7 +5,7 @@
 * Download the framework you need!
 * [Serrulata-Warehouserobbery-QB](https://github.com/Serrulata-Studios/serrulata-warehouserobbery/tree/qb)
 
-* [Serrulata-Warehouserobbery-OX](https://github.com/Serrulata-Studios/serrulata-warehouserobbery/tree/qb)
+* [Serrulata-Warehouserobbery-OX](https://github.com/Serrulata-Studios/serrulata-warehouserobbery/tree/ox)
 
 # Installation
 
