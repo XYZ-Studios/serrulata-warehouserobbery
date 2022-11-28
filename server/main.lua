@@ -1,6 +1,29 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
+local CoolDown = false
+
 -- Events
+
+RegisterServerEvent('serrulata-warehouse:server:coolout', function()
+    CoolDown = true
+    local timer = Config.CoolDown * 60000
+    while timer > 0 do
+        Wait(1000)
+        timer = timer - 1000
+        if timer == 0 then
+            CoolDown = false
+            TriggerClientEvent('serrulata-warehouse:client:cooldown')
+        end
+    end
+end)
+
+QBCore.Functions.CreateCallback("serrulata-warehouse:server:coolc",function(source, cb)
+    if CoolDown then
+        cb(true)
+    else
+        cb(false)
+    end
+end)
 
 RegisterNetEvent('warehouse:server:getItem', function()
     local src = source

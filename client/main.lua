@@ -6,18 +6,25 @@ local function GetRandomPackage()
   RegisterPickupTarget(packageCoords)
 end
 
-RegisterNetEvent('warehouse:client:target:pickupPackage', function()
-  TriggerEvent('animations:client:EmoteCommandStart', {"inspect"})
-  QBCore.Functions.Progressbar('cnct_elect', 'Looking for Valuble items!', 5000, false, true, {
-    disableMovement = true,
-    disableCarMovement = true,
-    disableMouse = false,
-    disableCombat = true,
-    }, {}, {}, {}, function()
-    end)
-  Wait(5000)
-  TriggerServerEvent('warehouse:server:getItem')
-  Wait(Config.Cooldown * 60000)
+RegisterNetEvent('warehouse:client:target:pickupPackage', function ()
+  QBCore.Functions.TriggerCallback("serrulata-warehouse:server:coolc",function(isCooldown)
+      if not isCooldown then
+        TriggerEvent('animations:client:EmoteCommandStart', {"inspect"})
+        QBCore.Functions.Progressbar('cnct_elect', 'Looking for Valuble items!', 5000, false, true, {
+          disableMovement = true,
+          disableCarMovement = true,
+          disableMouse = false,
+          disableCombat = true,
+          }, {}, {}, {}, function()
+        end)
+        TriggerServerEvent('warehouse:server:getItem')
+      else
+          QBCore.Functions.Notify("System seems to be on a cooldown", 'error')
+      end
+  end)
+end)
+
+RegisterNetEvent('serrulata-warehouse:client:cooldown', function()
   box1 = false
   box2 = false
   box3 = false
@@ -25,6 +32,19 @@ RegisterNetEvent('warehouse:client:target:pickupPackage', function()
   box5 = false
   box6 = false
 end)
+
+-- RegisterNetEvent('warehouse:client:target:pickupPackage', function()
+--   TriggerEvent('animations:client:EmoteCommandStart', {"inspect"})
+--   QBCore.Functions.Progressbar('cnct_elect', 'Looking for Valuble items!', 5000, false, true, {
+--     disableMovement = true,
+--     disableCarMovement = true,
+--     disableMouse = false,
+--     disableCombat = true,
+--     }, {}, {}, {}, function()
+--   end)
+--   Wait(5000)
+--   TriggerServerEvent('warehouse:server:getItem')
+-- end)
 
 local function buildInteriorDesign()
     for _, pickuploc in pairs(Config.PickupLocations) do
