@@ -6,7 +6,7 @@ local CoolDown = false
 
 RegisterServerEvent('serrulata-warehouse:server:coolout', function()
     CoolDown = true
-    local timer = Config.CoolDown * 60000
+    local timer = Config.CoolDown * (60 * 1000)
     while timer > 0 do
         Wait(1000)
         timer = timer - 1000
