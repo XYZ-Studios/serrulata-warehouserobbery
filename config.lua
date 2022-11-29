@@ -10,7 +10,8 @@ Config.OutsideLocation = vector3(719.37, -2102.86, 29.65) -- DO NOT CHANGE THESE
 Config.MaxItemsReceived = 2 -- Max amount of items you can get per box
 Config.MinItemReceivedQty = 1 -- Min amount of a certain item you can get at a time
 Config.MaxItemReceivedQty = 2 -- Max amount of a certain item you can get at a time
-Config.CoolDown = 10 -- How many minutes it takes until it can be looted again
+Config.CoolDown = 1 -- How many minutes it takes until it can be looted again
+Config.Cops = 0 -- Amount of cops needed to do the robbery
 
 
 
