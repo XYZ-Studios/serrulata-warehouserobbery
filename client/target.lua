@@ -41,122 +41,103 @@ exports['qb-target']:AddBoxZone("warehouse2", vector3(1087.18, -3099.36, -39.0),
   distance = 2.5,
 })
 
-exports['qb-target']:AddBoxZone("box1", vector3(1088.79, -3096.72, -40.0), 2.0, 2.0, {
-  name="box1",
-  heading=0,
-  minZ = -40.0,
-  maxZ = -35.5,
-  debugpoly = false,
-}, {
-  options = {
-      {
-          type = "client",
-          event = "warehouse:client:target:pickupPackage",
-          icon = "fa-sharp fa-solid fa-arrow-up-from-bracket",
-          label = "Look for Valuble Items",
-          action = function()
-            TriggerEvent("warehouse:client:target:pickupPackage")
-            box1 = true
-          end,
-          canInteract = function()
-              if box1 == false then
-                  return true
-              else
-                  return false
-              end
-          end,
-      },
-  },
-  distance = 2.5,
-})
+function ExportLocation1()
+  exports['qb-target']:AddBoxZone("box1", vector3(1088.79, -3096.72, -40.0), 2.0, 2.0, {
+    name="box1",
+    heading=0,
+    minZ = -40.0,
+    maxZ = -35.5,
+    debugpoly = false,
+  }, {
+    options = {
+        {
+            type = "client",
+            event = "warehouse:client:target:pickupPackage",
+            icon = "fa-sharp fa-solid fa-arrow-up-from-bracket",
+            label = "Look for Valuble Items",
+            action = function()
+              TriggerEvent("warehouse:client:target:pickupPackage")
+              RemoveLocation1()
+            end,
+        },
+    },
+    distance = 2.5,
+  })
+end
 
-exports['qb-target']:AddBoxZone("box2", vector3(1091.31, -3096.72, -40.0), 2.0, 2.0, {
-  name="box2",
-  heading=0,
-  minZ = -40.0,
-  maxZ = -35.5,
-  debugpoly = false,
-}, {
-  options = {
-      {
-          type = "client",
-          event = "warehouse:client:target:pickupPackage",
-          icon = "fa-sharp fa-solid fa-arrow-up-from-bracket",
-          label = "Look for Valuble Items",
-          action = function()
-            TriggerEvent("warehouse:client:target:pickupPackage")
-            box2 = true
-          end,
-          canInteract = function()
-              if box2 == false then
-                  return true
-              else
-                  return false
-              end
-          end,
-      },
-  },
-  distance = 2.5,
-})
+function ExportLocation2()
+  exports['qb-target']:AddBoxZone("box2", vector3(1091.31, -3096.72, -40.0), 2.0, 2.0, {
+    name="box2",
+    heading=0,
+    minZ = -40.0,
+    maxZ = -35.5,
+    debugpoly = false,
+  }, {
+    options = {
+        {
+            type = "client",
+            event = "warehouse:client:target:pickupPackage",
+            icon = "fa-sharp fa-solid fa-arrow-up-from-bracket",
+            label = "Look for Valuble Items",
+            action = function()
+              TriggerEvent("warehouse:client:target:pickupPackage")
+              RemoveLocation2()
+            end,
+        },
+    },
+    distance = 2.5,
+  })
+end
 
-exports['qb-target']:AddBoxZone("box3", vector3(1095.22, -3096.64, -40.0), 2.0, 2.0, {
-  name="box3",
-  heading=0,
-  minZ = -40.0,
-  maxZ = -35.5,
-  debugpoly = false,
-}, {
-  options = {
-      {
-          type = "client",
-          event = "warehouse:client:target:pickupPackage",
-          icon = "fa-sharp fa-solid fa-arrow-up-from-bracket",
-          label = "Look for Valuble Items",
-          action = function()
-            TriggerEvent("warehouse:client:target:pickupPackage")
-            box3 = true
-          end,
-          canInteract = function()
-              if box3 == false then
-                  return true
-              else
-                  return false
-              end
-          end,
-      },
-  },
-  distance = 2.5,
-})
+function ExportLocation3()
+  exports['qb-target']:AddBoxZone("box3", vector3(1095.22, -3096.64, -40.0), 2.0, 2.0, {
+    name="box3",
+    heading=0,
+    minZ = -40.0,
+    maxZ = -35.5,
+    debugpoly = false,
+  }, {
+    options = {
+        {
+            type = "client",
+            event = "warehouse:client:target:pickupPackage",
+            icon = "fa-sharp fa-solid fa-arrow-up-from-bracket",
+            label = "Look for Valuble Items",
+            action = function()
+              TriggerEvent("warehouse:client:target:pickupPackage")
+              RemoveLocation3()
+            end,
+        },
+    },
+    distance = 2.5,
+  })
+end
 
-exports['qb-target']:AddBoxZone("box4", vector3(1101.31, -3096.64, -40.0), 2.0, 2.0, {
-  name="box4",
-  heading=0,
-  minZ = -40.0,
-  maxZ = -35.5,
-  debugpoly = false,
-}, {
-  options = {
-      {
-          type = "client",
-          event = "warehouse:client:target:pickupPackage",
-          icon = "fa-sharp fa-solid fa-arrow-up-from-bracket",
-          label = "Look for Valuble Items",
-          action = function()
-            TriggerEvent("warehouse:client:target:pickupPackage")
-            box4 = true
-          end,
-          canInteract = function()
-              if box4 == false then
-                  return true
-              else
-                  return false
-              end
-          end,
-      },
-  },
-  distance = 2.5,
-})
+function ExportLocation4()
+  exports['qb-target']:AddBoxZone("box4", vector3(1101.31, -3096.64, -40.0), 2.0, 2.0, {
+    name="box4",
+    heading=0,
+    minZ = -40.0,
+    maxZ = -35.5,
+    debugpoly = false,
+  }, {
+    options = {
+        {
+            type = "client",
+            event = "warehouse:client:target:pickupPackage",
+            icon = "fa-sharp fa-solid fa-arrow-up-from-bracket",
+            label = "Look for Valuble Items",
+            action = function()
+              TriggerEvent("warehouse:client:target:pickupPackage")
+              RemoveLocation4()
+            end,
+        },
+    },
+    distance = 2.5,
+  })
+end
 
+function ExportLocation5()
 exports['qb-target']:AddBoxZone("box5", vector3(1103.89, -3096.87, -40.0), 2.0, 2.0, {
   name="box5",
   heading=0,
@@ -172,49 +153,37 @@ exports['qb-target']:AddBoxZone("box5", vector3(1103.89, -3096.87, -40.0), 2.0, 
           label = "Look for Valuble Items",
           action = function()
             TriggerEvent("warehouse:client:target:pickupPackage")
-            box5 = true
-          end,
-          canInteract = function()
-              if box5 == false then
-                  return true
-              else
-                  return false
-              end
+            RemoveLocation5()
           end,
       },
   },
   distance = 2.5,
 })
+end
 
-exports['qb-target']:AddBoxZone("box6", vector3(1097.75, -3096.82, -40.0), 2.0, 2.0, {
-  name="box6",
-  heading=0,
-  minZ = -40.0,
-  maxZ = -35.5,
-  debugpoly = false,
-}, {
-  options = {
-      {
-          type = "client",
-          event = "warehouse:client:target:pickupPackage",
-          icon = "fa-sharp fa-solid fa-arrow-up-from-bracket",
-          label = "Look for Valuble Items",
-          action = function()
-            TriggerEvent("warehouse:client:target:pickupPackage")
-            box6 = true
-          end,
-          canInteract = function()
-              if box6 == false then
-                  return true
-              else
-                  return false
-              end
-          end,
-
-      },
-  },
-  distance = 2.5,
-})
+function ExportLocation6()
+  exports['qb-target']:AddBoxZone("box6", vector3(1097.75, -3096.82, -40.0), 2.0, 2.0, {
+    name="box6",
+    heading=0,
+    minZ = -40.0,
+    maxZ = -35.5,
+    debugpoly = false,
+  }, {
+    options = {
+        {
+            type = "client",
+            event = "warehouse:client:target:pickupPackage",
+            icon = "fa-sharp fa-solid fa-arrow-up-from-bracket",
+            label = "Look for Valuble Items",
+            action = function()
+              TriggerEvent("warehouse:client:target:pickupPackage")
+              RemoveLocation6()
+            end
+        },
+    },
+    distance = 2.5,
+  })
+end
 
 exports['qb-target']:AddBoxZone("warehousepolice", vector3(719.2, -2102.8, 29.24), 1.4, 1, {
   name = "warehousepolice",
@@ -252,3 +221,28 @@ exports['qb-target']:AddBoxZone("sellelectronics", vector3(-658.74, -855.38, 24.
   },
   distance = 2.5,
 })
+
+
+function RemoveLocation1()
+  exports['qb-target']:RemoveZone("box1")
+end
+
+function RemoveLocation2()
+  exports['qb-target']:RemoveZone("box2")
+end
+
+function RemoveLocation3()
+  exports['qb-target']:RemoveZone("box3")
+end
+
+function RemoveLocation4()
+  exports['qb-target']:RemoveZone("box4")
+end
+
+function RemoveLocation5()
+  exports['qb-target']:RemoveZone("box5")
+end
+
+function RemoveLocation6()
+  exports['qb-target']:RemoveZone("box6")
+end
