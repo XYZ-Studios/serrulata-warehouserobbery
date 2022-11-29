@@ -1,14 +1,15 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-local packageCoords = nil
+local CurrentCops = 0
+local PlayerJob = {}
 
-local function GetRandomPackage()
-  packageCoords = Config.PickupLocations[math.random(1, #Config.PickupLocations)]
-  RegisterPickupTarget(packageCoords)
-end
+RegisterNetEvent('police:SetCopCount', function(amount)
+  CurrentCops = amount
+end)
 
 RegisterNetEvent('warehouse:client:target:pickupPackage', function ()
-  QBCore.Functions.TriggerCallback("serrulata-warehouse:server:coolc",function(isCooldown)
-      if not isCooldown then
+  QBCore.Functions.GetPlayerData(function(PlayerData)
+    PlayerJob = PlayerData.job
+      if PlayerData.job.name ~= "police" then
         TriggerEvent('animations:client:EmoteCommandStart', {"inspect"})
         QBCore.Functions.Progressbar('cnct_elect', 'Looking for Valuble items!', 5000, false, true, {
           disableMovement = true,
@@ -17,34 +18,13 @@ RegisterNetEvent('warehouse:client:target:pickupPackage', function ()
           disableCombat = true,
           }, {}, {}, {}, function()
         end)
+        Wait(5000)
         TriggerServerEvent('warehouse:server:getItem')
       else
-          QBCore.Functions.Notify("System seems to be on a cooldown", 'error')
+        QBCore.Functions.Notify('You Cheecky Fuck', 'primary', 8000)
       end
   end)
 end)
-
-RegisterNetEvent('serrulata-warehouse:client:cooldown', function()
-  box1 = false
-  box2 = false
-  box3 = false
-  box4 = false
-  box5 = false
-  box6 = false
-end)
-
--- RegisterNetEvent('warehouse:client:target:pickupPackage', function()
---   TriggerEvent('animations:client:EmoteCommandStart', {"inspect"})
---   QBCore.Functions.Progressbar('cnct_elect', 'Looking for Valuble items!', 5000, false, true, {
---     disableMovement = true,
---     disableCarMovement = true,
---     disableMouse = false,
---     disableCombat = true,
---     }, {}, {}, {}, function()
---   end)
---   Wait(5000)
---   TriggerServerEvent('warehouse:server:getItem')
--- end)
 
 local function buildInteriorDesign()
     for _, pickuploc in pairs(Config.PickupLocations) do
@@ -66,6 +46,12 @@ RegisterNetEvent('warehouse:EnterDoor', function(data)
   Wait(1000)
   buildInteriorDesign()
   SetEntityCoords(PlayerPedId(), Config.InsideLocation.x, Config.InsideLocation.y, Config.InsideLocation.z)
+  ExportLocation1()
+  ExportLocation2()
+  ExportLocation3()
+  ExportLocation4()
+  ExportLocation5()
+  ExportLocation6()
   DoScreenFadeIn(500)
 end)
 
@@ -73,6 +59,7 @@ RegisterNetEvent('warehouse:ExitDoor', function(data)
   DoScreenFadeOut(500)
   Wait(1000)
   SetEntityCoords(PlayerPedId(), Config.OutsideLocation.x, Config.OutsideLocation.y, Config.OutsideLocation.z)
+  TriggerServerEvent('serrulata-warehouse:server:coolout')
   DoScreenFadeIn(500)
 end)
 
@@ -81,66 +68,75 @@ end)
 -- Door thread
 
 RegisterNetEvent('warehouse:EnterLocation', function()
-    if QBCore.Functions.HasItem(Config.HackItem) then
-        TriggerEvent('animations:client:EmoteCommandStart', {"mechanic4"})
-        QBCore.Functions.Progressbar('cnct_elect', 'Rewiring the Security System...', 5000, false, true, {
-            disableMovement = true,
-            disableCarMovement = true,
-            disableMouse = false,
-            disableCombat = true,
-        }, {}, {}, {}, function()
-        end)
-        Wait(5000)
-      
-        TriggerEvent('animations:client:EmoteCommandStart', {"mechanic4"})
-        exports['ps-ui']:Scrambler(function(success)
-            if success then
-                Wait(100)
-                TriggerEvent('animations:client:EmoteCommandStart', {"mechanic4"})
-                Wait(500)
-                QBCore.Functions.Progressbar('po_usb', 'Making Final Adjustments..', 4000, false, true, {
-                    disableMovement = true,
-                    disableCarMovement = true,
-                    disableMouse = false,
-                    disableCombat = true,
-                }, {}, {}, {}, function()
-                end)
-                Wait(4000)
-                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
-                QBCore.Functions.Notify('You Successfully Rewired the Door! You got 100 seconds on you before police gets alerted!!!', 'primary', 8000)
-                Wait(1000)
-                TriggerEvent('warehouse:EnterDoor')
-                Wait(100000)
-                exports["ps-dispatch"]:CustomAlert({
-                  coords = vector3(720.03, -2102.93, 29.24),
-                  message = "Warehouse Robbery",
-                  dispatchCode = "69-420",
-                  description = "Warehouse Robbery",
-                  radius = 0,
-                  sprite = 357,
-                  color = 2,
-                  scale = 0.7,
-                  length = 3,
-                })
+  if CurrentCops >= Config.Cops then
+      QBCore.Functions.TriggerCallback("serrulata-warehouse:server:coolc",function(isCooldown)
+      if not isCooldown then
+        if QBCore.Functions.HasItem(Config.HackItem) then
+            TriggerEvent('animations:client:EmoteCommandStart', {"mechanic4"})
+            QBCore.Functions.Progressbar('cnct_elect', 'Rewiring the Security System...', 5000, false, true, {
+                disableMovement = true,
+                disableCarMovement = true,
+                disableMouse = false,
+                disableCombat = true,
+            }, {}, {}, {}, function()
+            end)
+            Wait(5000)
+            TriggerEvent('animations:client:EmoteCommandStart', {"mechanic4"})
+            exports['ps-ui']:Scrambler(function(success)
+                if success then
+                    Wait(100)
+                    TriggerEvent('animations:client:EmoteCommandStart', {"mechanic4"})
+                    Wait(500)
+                    QBCore.Functions.Progressbar('po_usb', 'Making Final Adjustments..', 4000, false, true, {
+                        disableMovement = true,
+                        disableCarMovement = true,
+                        disableMouse = false,
+                        disableCombat = true,
+                    }, {}, {}, {}, function()
+                    end)
+                    Wait(4000)
+                    TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+                    QBCore.Functions.Notify('You Successfully Rewired the Door! You got 100 seconds on you before police gets alerted!!!', 'primary', 8000)
+                    Wait(1000)
+                    TriggerEvent('warehouse:EnterDoor')
+                    Wait(100000)
+                    exports["ps-dispatch"]:CustomAlert({
+                      coords = vector3(720.03, -2102.93, 29.24),
+                      message = "Warehouse Robbery",
+                      dispatchCode = "69-420",
+                      description = "Warehouse Robbery",
+                      radius = 0,
+                      sprite = 357,
+                      color = 2,
+                      scale = 0.7,
+                      length = 3,
+                    })
+                else
+                    TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+                    QBCore.Functions.Notify('Police Was Alerted!', 'error', 2000)
+                    exports["ps-dispatch"]:CustomAlert({
+                      coords = vector3(720.03, -2102.93, 29.24),
+                      message = "Attempted Warehouse Robbery",
+                      dispatchCode = "69-420",
+                      description = "Attempted Warehouse Robbery",
+                      radius = 0,
+                      sprite = 357,
+                      color = 2,
+                      scale = 0.7,
+                      length = 3,
+                    })
+                    end
+                end, Config.HackType, Config.HackTime, 0)
             else
-                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
-                QBCore.Functions.Notify('Police Was Alerted!', 'error', 2000)
-                exports["ps-dispatch"]:CustomAlert({
-                  coords = vector3(720.03, -2102.93, 29.24),
-                  message = "Attempted Warehouse Robbery",
-                  dispatchCode = "69-420",
-                  description = "Attempted Warehouse Robbery",
-                  radius = 0,
-                  sprite = 357,
-                  color = 2,
-                  scale = 0.7,
-                  length = 3,
-                })
-                end
-            end, Config.HackType, Config.HackTime, 0)
-        else
-            QBCore.Functions.Notify('You dont have the right tools', 'error', 3000)
-        end 
+                QBCore.Functions.Notify('You dont have the right tools', 'error', 3000)
+            end
+      else
+        QBCore.Functions.Notify("System seems to be on a cooldown", 'error')
+      end
+    end)
+  else
+    QBCore.Functions.Notify("Not Enough Police On!", 'error')
+  end
 end)
 
 
