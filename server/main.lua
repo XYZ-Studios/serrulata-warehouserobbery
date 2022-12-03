@@ -34,6 +34,7 @@ RegisterNetEvent('warehouse:server:getItem', function()
       Player.Functions.AddItem(randItem, amount)
       TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[randItem], 'add')
       Wait(500)
+      TriggerEvent('qb-log:server:CreateLog', 'warehouserobbery', 'Warehouse Robbery', 'red', Player.PlayerData.charinfo.firstname .. ' ' .. Player.PlayerData.charinfo.lastname .. ' successfully Robbed Warehouse and got ' .. amount .. ' ' .. randItem, false)
     end
 end)
 
