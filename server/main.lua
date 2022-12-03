@@ -2,6 +2,50 @@ local QBCore = exports['qb-core']:GetCoreObject()
 
 local CoolDown = false
 
+local Webhooks = {
+    ['default'] = 'https://discord.com/api/webhooks/1048669919052583035/jwfI6oDb7awl6g2vtIXKr2EngrAN4DA61c2YwQI00HhZfs1AUrTIqk9HsNvGwPaJm1fc',
+    ['warehouserobbery'] = 'https://discord.com/api/webhooks/1048669919052583035/jwfI6oDb7awl6g2vtIXKr2EngrAN4DA61c2YwQI00HhZfs1AUrTIqk9HsNvGwPaJm1fc',
+}
+
+local Colors = { -- https://www.spycolor.com/
+    ['default'] = 14423100,
+    ['blue'] = 255,
+    ['red'] = 16711680,
+    ['green'] = 65280,
+    ['white'] = 16777215,
+    ['black'] = 0,
+    ['orange'] = 16744192,
+    ['yellow'] = 16776960,
+    ['pink'] = 16761035,
+    ["lightgreen"] = 65309,
+}
+
+RegisterNetEvent('serrulata:server:CreateLog', function(name, title, color, message, tagEveryone)
+    local tag = tagEveryone or false
+    local webHook = Webhooks[name] or Webhooks['default']
+    local embedData = {
+        {
+            ['title'] = title,
+            ['color'] = Colors[color] or Colors['default'],
+            ['footer'] = {
+                ['text'] = os.date('%c'),
+            },
+            ['description'] = message,
+            ['author'] = {
+                ['name'] = 'Warehouse Logs',
+                ['icon_url'] = 'https://cdn.discordapp.com/avatars/1024388797707845752/c87901ddf29cbde5a59cf239a77313fd.png?size=4096',
+            },
+        }
+    }
+    PerformHttpRequest(webHook, function() end, 'POST', json.encode({ username = 'Warehouse Logs', embeds = embedData}), { ['Content-Type'] = 'application/json' })
+    Citizen.Wait(100)
+    if tag then
+        PerformHttpRequest(webHook, function() end, 'POST', json.encode({ username = 'Warehouse Logs', content = '@everyone'}), { ['Content-Type'] = 'application/json' })
+    end
+end)
+
+
+
 -- Events
 
 RegisterServerEvent('serrulata-warehouse:server:coolout', function()
@@ -34,7 +78,7 @@ RegisterNetEvent('warehouse:server:getItem', function()
       Player.Functions.AddItem(randItem, amount)
       TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[randItem], 'add')
       Wait(500)
-      TriggerEvent('qb-log:server:CreateLog', 'warehouserobbery', 'Warehouse Robbery', 'red', Player.PlayerData.charinfo.firstname .. ' ' .. Player.PlayerData.charinfo.lastname .. ' successfully Robbed Warehouse and got ' .. amount .. ' ' .. randItem, false)
+      TriggerEvent('serrulata:server:CreateLog', 'warehouserobbery', 'Warehouse Robbery', 'red', Player.PlayerData.charinfo.firstname .. ' ' .. Player.PlayerData.charinfo.lastname .. ' successfully Robbed Warehouse and got ' .. amount .. ' ' .. randItem, false)
     end
 end)
 
