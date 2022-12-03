@@ -3,8 +3,8 @@ local QBCore = exports['qb-core']:GetCoreObject()
 local CoolDown = false
 
 local Webhooks = {
-    ['default'] = 'https://discord.com/api/webhooks/1048669919052583035/jwfI6oDb7awl6g2vtIXKr2EngrAN4DA61c2YwQI00HhZfs1AUrTIqk9HsNvGwPaJm1fc',
-    ['warehouserobbery'] = 'https://discord.com/api/webhooks/1048669919052583035/jwfI6oDb7awl6g2vtIXKr2EngrAN4DA61c2YwQI00HhZfs1AUrTIqk9HsNvGwPaJm1fc',
+    ['default'] = '',
+    ['warehouserobbery'] = '', -- Put your webhook for logs here
 }
 
 local Colors = { -- https://www.spycolor.com/
