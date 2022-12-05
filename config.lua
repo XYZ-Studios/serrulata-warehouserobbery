@@ -13,6 +13,17 @@ Config.MaxItemReceivedQty = 2 -- Max amount of a certain item you can get at a t
 Config.CoolDown = 1 -- How many minutes it takes until it can be looted again
 Config.Cops = 0 -- Amount of cops needed to do the robbery
 
+-- Guards --
+
+Config.Patrol = true -- If you want a patrol car to spawn when they exit the warehouse (It will chase them down until killed)
+Config.Guards = 2 -- Amount of guards in the car that will shoot at you (Limit: 3)
+
+-- Weapon --
+
+Config.PassengerAccuracy = 100 -- Accuracy of the Passengers - 100 = Perfect Accuracy its not recommended to go above 50 because the Passengers will shoot you down instantly
+Config.PassengerWeapon = 'WEAPON_COMBATPISTOL' -- Weapon of the Passengers - https://wiki.rage.mp/index.php?title=Weapons
+Config.PassengerAmmo = 250 -- Ammo for the Passengers
+Config.WeaponParten = 'FIRING_PATTERN_BURST_FIRE_DRIVEBY' -- Do not change since it could brake the script
 
 
 Config.PickupLocations = { -- DO NOT CHANGE THESE IF YOU HAVE NOT CHANGED THE target.lua FIRST
