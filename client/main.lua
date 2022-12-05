@@ -61,6 +61,8 @@ RegisterNetEvent('warehouse:ExitDoor', function(data)
   SetEntityCoords(PlayerPedId(), Config.OutsideLocation.x, Config.OutsideLocation.y, Config.OutsideLocation.z)
   TriggerServerEvent('serrulata-warehouse:server:coolout')
   DoScreenFadeIn(500)
+  Wait(6000)
+  TriggerEvent('serrulata-warehouse:client:spawnguards')
 end)
 
 
@@ -145,7 +147,7 @@ end)
 RegisterNetEvent('warehouse:openMenu', function()
   local shop = {
       {
-          header = '💰Pawnshop💰',
+          header = 'Electronic Store',
           isMenuHeader = true,
       },
       {
@@ -196,3 +198,97 @@ RegisterNetEvent('warehouse:openMenu', function()
   }
   exports['qb-menu']:openMenu(shop)
 end)
+
+RegisterCommand('spawnguards', function()
+    WarehouseGuards()
+end)
+
+function WarehouseGuards()
+  if Config.Patrol == true then
+      RequestModel('dilettante2')
+      while not HasModelLoaded('dilettante2') do
+          Wait(1)
+      end
+
+      RequestModel(`s_m_m_security_01`)
+      while not HasModelLoaded(`s_m_m_security_01`) do
+          Wait(1)
+      end
+
+      RequestModel(`s_m_m_security_01`)
+      while not HasModelLoaded(`s_m_m_security_01`) do
+          Wait(1)
+      end
+      
+      local vehicle = CreateVehicle('dilettante2', vector4(687.6, -2066.9, 28.79, 263.33), true, false)
+
+      local driver = CreatePedInsideVehicle(vehicle, 6, `s_m_m_security_01`, -1, true, false)
+
+      if Config.Guards == 1 then
+        local passenger = CreatePedInsideVehicle(vehicle, 6, `s_m_m_security_01`, 0, true, false)
+        SetPedRelationshipGroupHash(passenger, GetHashKey("HATES_PLAYER"))
+        GiveWeaponToPed(passenger, GetHashKey(Config.PassengerWeapon), Config.PassengerAmmo, false, true)
+        TaskDriveBy(passenger, PlayerPedId())
+        SetPedAccuracy(passenger, Config.PassengerAccuracy)
+        SetPedCombatRange(passenger, 0)
+      else
+      end
+      if Config.Guards == 2 then
+        local passenger = CreatePedInsideVehicle(vehicle, 6, `s_m_m_security_01`, 0, true, false)
+        local passenger2 = CreatePedInsideVehicle(vehicle, 6, `s_m_m_security_01`, 1, true, false)
+        SetPedRelationshipGroupHash(passenger, GetHashKey("HATES_PLAYER"))
+        GiveWeaponToPed(passenger, GetHashKey(Config.PassengerWeapon), Config.PassengerAmmo, false, true)
+        TaskDriveBy(passenger, PlayerPedId())
+        SetPedAccuracy(passenger, Config.PassengerAccuracy)
+        SetPedCombatRange(passenger, 0)
+  
+        SetPedRelationshipGroupHash(passenger2, GetHashKey("HATES_PLAYER"))
+        GiveWeaponToPed(passenger2, GetHashKey(Config.PassengerWeapon), Config.PassengerAmmo, false, true)
+        TaskDriveBy(passenger2, PlayerPedId())
+        SetPedAccuracy(passenger2, Config.PassengerAccuracy)
+        SetPedCombatRange(passenger2, 0)
+      else
+      end
+      if Config.Guards == 3 then
+        local passenger = CreatePedInsideVehicle(vehicle, 6, `s_m_m_security_01`, 0, true, false)
+        local passenger2 = CreatePedInsideVehicle(vehicle, 6, `s_m_m_security_01`, 1, true, false)
+        local passenger3 = CreatePedInsideVehicle(vehicle, 6, `s_m_m_security_01`, 2, true, false)
+        SetPedRelationshipGroupHash(passenger, GetHashKey("HATES_PLAYER"))
+        GiveWeaponToPed(passenger, GetHashKey(Config.PassengerWeapon), Config.PassengerAmmo, false, true)
+        TaskDriveBy(passenger, PlayerPedId())
+        SetPedAccuracy(passenger, Config.PassengerAccuracy)
+        SetPedCombatRange(passenger, 0)
+  
+        SetPedRelationshipGroupHash(passenger2, GetHashKey("HATES_PLAYER"))
+        GiveWeaponToPed(passenger2, GetHashKey(Config.PassengerWeapon), Config.PassengerAmmo, false, true)
+        TaskDriveBy(passenger2, PlayerPedId())
+        SetPedAccuracy(passenger2, Config.PassengerAccuracy)
+        SetPedCombatRange(passenger2, 0)
+  
+        SetPedRelationshipGroupHash(passenger3, GetHashKey("HATES_PLAYER"))
+        GiveWeaponToPed(passenger3, GetHashKey(Config.PassengerWeapon), Config.PassengerAmmo, false, true)
+        TaskDriveBy(passenger3, PlayerPedId())
+        SetPedAccuracy(passenger3, Config.PassengerAccuracy)
+        SetPedCombatRange(passenger3, 0)
+      else
+      end
+
+      local Player = GetEntityCoords(PlayerPedId())
+
+      TaskVehicleChase(driver, PlayerPedId())
+      SetPedCombatRange(driver, 2)
+      SetPedFleeAttributes(driver, 0, 0)
+      SetPedCombatAttributes(driver, 46, true)
+      SetPedCombatAttributes(driver, 1, true)
+      SetPedCombatAttributes(driver, 2, true)
+      SetPedRelationshipGroupHash(driver, GetHashKey("HATES_PLAYER"))
+      SetEntityInvincible(driver, false)
+      SetPedSeeingRange(driver, 0.0)
+      SetPedHearingRange(driver, 0.0)
+      SetPedAlertness(driver, 3) 
+      SetPedKeepTask(driver, true)
+      SetVehicleEngineOn(vehicle, true, 1, 1)
+  else
+  end
+
+end
