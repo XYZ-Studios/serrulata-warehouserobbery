@@ -13,7 +13,7 @@
 
 Add the following code to your server.cfg/resouces.cfg
 ```
-ensure sserrulata-warehouserobbery
+ensure serrulata-warehouserobbery
 ```
 
 # Config
