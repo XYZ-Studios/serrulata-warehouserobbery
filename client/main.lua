@@ -62,7 +62,7 @@ RegisterNetEvent('warehouse:ExitDoor', function(data)
   TriggerServerEvent('serrulata-warehouse:server:coolout')
   DoScreenFadeIn(500)
   Wait(6000)
-  TriggerEvent('serrulata-warehouse:client:spawnguards')
+  WarehouseGuards()
 end)
 
 
@@ -275,7 +275,8 @@ function WarehouseGuards()
 
       local Player = GetEntityCoords(PlayerPedId())
 
-      TaskVehicleChase(driver, PlayerPedId())
+      TaskVehicleFollow(driver, vehicle, PlayerPedId(), -1, 6, 1)
+      TaskVehicleChase(driver, Player)
       SetPedCombatRange(driver, 2)
       SetPedFleeAttributes(driver, 0, 0)
       SetPedCombatAttributes(driver, 46, true)
